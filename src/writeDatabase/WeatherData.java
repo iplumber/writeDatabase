@@ -57,4 +57,14 @@ public class WeatherData {
     public void setWeatherDescription(String weatherDescription) {
         this.weatherDescription = weatherDescription;
     }
+
+	@Override
+	public String toString() {
+		return "WeatherData [date=" + date + ", temperature=" + temperature + ", temperatureFeelsLike="
+				+ temperatureFeelsLike + ", humidity=" + humidity + ", weatherDescription=" + weatherDescription
+				+ ", weatherTimeStamp=" + weatherTimeStamp + ", weatherDate=" + weatherDate + ", number=" + number
+				+ "]";
+	}
+    
+    
 }
