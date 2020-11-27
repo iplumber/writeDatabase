@@ -114,10 +114,17 @@ public class writeDatabase {
 	}
 
 	public int insert(WeatherData currentWeather) throws SQLException, ClassNotFoundException {
-
+		String driver = "org.postgresql.Driver";
+		String url = "jdbc:postgresql://localhost:5433/weatherData";
+		String username = "postgres";
+		String password = "123";
+		Class.forName(driver);
+		
 		int i = 0;
 		String sql = "insert into hour_weather(weathertimestamp,temperature,temperaturefeelslike,humidity,weather,date,key) values(?,?,?,?,?,?,?)";
-		try (Connection conn = getConn(); PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
+		try (
+		     Connection conn = (Connection) DriverManager.getConnection(url, username, password);
+		     PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
 			pstmt.setString(1, currentWeather.getDate());
 			pstmt.setDouble(2, currentWeather.getTemperature());
 			pstmt.setDouble(3, currentWeather.getTemperatureFeelsLike());
@@ -127,17 +134,6 @@ public class writeDatabase {
 			pstmt.setInt(7, currentWeather.getNumber());
 			i = pstmt.executeUpdate();
 			return i;
-		}
-	}
-
-	public Connection getConn() throws ClassNotFoundException, SQLException {
-		String driver = "org.postgresql.Driver";
-		String url = "jdbc:postgresql://localhost:5433/weatherData";
-		String username = "postgres";
-		String password = "123";
-		Class.forName(driver);
-		try (Connection conn = (Connection) DriverManager.getConnection(url, username, password)) {
-			return conn;
 		}
 	}
 }
